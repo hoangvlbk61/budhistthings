@@ -34,9 +34,9 @@ const ShopCard: FC<CardData> = ({ image, price, name, sold }) => {
 					</h5>
 					<p className="text-gray-700 text-base mb-4 line-clamp-4">
 						Some quick example text to build on the card title and
-						make up the bulk of the card's content. Some quick
+						make up the bulk of the card &#39 s content. Some quick
 						example text to build on the card title and make up the
-						bulk of the card's content.
+						bulk of the card &#39 s content.
 					</p>
 					<div className="ml-1"> {numberWithCommas(price)} VND</div>
 					<div className="flex justify-between">
