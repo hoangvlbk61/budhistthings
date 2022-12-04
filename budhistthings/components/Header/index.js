@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import faGem from '@fortawesome/fontawesome-free-regular/faGem'
 import { faOm } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import Link from 'next/link';
+
+
 
 const Header = props => {
     return (
@@ -18,10 +21,11 @@ const Header = props => {
             </div>
             <nav>
                 <ul>
-                    <li><a onClick={() => { props.onOpenArticle('intro') }}>Intro</a></li>
-                    <li><a onClick={() => { props.onOpenArticle('work') }}>Blog</a></li>
-                    <li><a onClick={() => { props.onOpenArticle('about') }}>Shop</a></li>
-                    <li><a onClick={() => { props.onOpenArticle('contact') }}>Contact</a></li>
+                    <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('intro') }}>Intro</a></li>
+                    {/* <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('work') }}>Blog</a></li> */}
+                    <li><Link href={"/blog"}>Blog</Link></li>
+                    <li><Link href={"/shop"}>Shop</Link></li>
+                    <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('contact') }}>Contact</a></li>
                 </ul>
             </nav>
         </header>

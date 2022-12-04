@@ -13,7 +13,8 @@
       {
         "extensions": ["css$", "scss$"]
       }
-    ]
+    ],
+    ["styled-components", { "ssr": true }]
   ],
   "presets": [
     "next/babel"
