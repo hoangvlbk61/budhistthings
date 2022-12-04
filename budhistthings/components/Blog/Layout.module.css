@@ -1,4 +1,4 @@
-.colorBackground {
+/* .colorBackground {
   left: 50%;
   transform: translateX(-50%);
   background: radial-gradient(
@@ -13,12 +13,22 @@
     radial-gradient(at 24% 7%, var(--color-gradient-2) 0, transparent 40%),
     radial-gradient(at 76% 46%, var(--color-gradient-1) 0, transparent 50%);
   /* mix-blend-mode: normal; */
-  max-height: 800px;
-  height: 80vh;
-  max-width: 1400px;
-  width: 70vw;
-  width: 100%;
-  filter: blur(44px);
+  /* max-height: 800px; */
+  /* height: 80vh; */
+  /* max-width: 1400px; */
+  /* width: 70vw; */
+  /* width: 100%; */
+  /* filter: blur(44px); */
+  /* z-index: -1; */
+/* } */ 
+.colorBackground {
+  background-image: url("/images/bg1.jpg");
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
   z-index: -1;
 }
 

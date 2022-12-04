@@ -23,7 +23,7 @@ const Header = props => {
                 <ul>
                     <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('intro') }}>Intro</a></li>
                     {/* <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('work') }}>Blog</a></li> */}
-                    <li><Link href={"/blog"}>Blog</Link></li>
+                    <li><Link href={"/posts"}>Blog</Link></li>
                     <li><Link href={"/shop"}>Shop</Link></li>
                     <li><a className='cursor-pointer' onClick={() => { props.onOpenArticle('contact') }}>Contact</a></li>
                 </ul>
