@@ -18,7 +18,7 @@ const ShopCard: FC<CardData> = ({ image, price, name, sold }) => {
 	return (
 		<div className="flex justify-center mb-4">
 			<div className="rounded-lg shadow-lg bg-white max-w-sm">
-				<a href="#!">
+				<a className="flex justify-center" href="#!">
 					<Image
 						className="rounded-t-lg"
 						// src="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
