@@ -7,14 +7,19 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { numberWithCommas } from "../utils/price";
+import { setCarts } from "../utils/cart";
 type CardData = {
 	image: string;
 	price: number;
 	name: string;
 	sold: number;
+	id: string;
 };
 
-const ShopCard: FC<CardData> = ({ image, price, name, sold }) => {
+const ShopCard: FC<CardData> = ({ image, price, name, sold, id }) => {
+	const onAddProduct = () => {
+		setCarts({ id }, true);
+	}
 	return (
 		<div className="flex justify-center mb-4">
 			<div className="rounded-lg shadow-lg bg-white max-w-sm">
@@ -43,6 +48,7 @@ const ShopCard: FC<CardData> = ({ image, price, name, sold }) => {
 						<button
 							type="button"
 							className="tracking-wide h-8 inline-block px-3 py-1.5 bg-amber-600 normal-case text-white font-small text-xs leading-tight rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out"
+							onClick={onAddProduct}
 						>
 							<FontAwesomeIcon
 								icon={faCartPlus}
