@@ -50,6 +50,11 @@ const ShopPage: FC<ShopType> = (props) => {
         return pr;
     }, [dataMapping])
 
+    const removeCart = () => {
+        setCarts({});
+        removeCarts();
+    }
+
     return (
         <ShopLayout>
             <div className="grid gap-10 px-10 py-10" style={{ background: "#c99343" }}>
@@ -66,13 +71,14 @@ const ShopPage: FC<ShopType> = (props) => {
                     <tbody>
                         {dataMapping.map(({ product, count }) =>
                             <tr key={product.id}>
-                                <td className="align-top text-center">
+                                <td className="align-top text-center flex justify-center ">
                                     <Image
-                                        className="rounded-t-lg"
+                                        className="rounded-t-lg w-full"
                                         src={product.image}
                                         width={400}
                                         height={400}
                                         alt=""
+                                        style={{maxWidth: "10rem"}}
                                     />
                                 </td>
                                 <td className="align-top">{product.name}</td>
@@ -113,15 +119,16 @@ const ShopPage: FC<ShopType> = (props) => {
 
                 </div>
             </div>
-            <Dialog open={open} onClose={() => setOpen(false)} />
+            <Dialog open={open} onClose={() => setOpen(false)} removeCart={removeCart}/>
         </ShopLayout>
     );
 };
 
 const Dialog: FC<{
     open: boolean,
-    onClose: Function
-}> = ({ open, onClose }) => {
+    onClose: Function,
+    removeCart: Function,
+}> = ({ open, onClose, removeCart }) => {
     if (!open) return null;
 
     const onSubmit = (evt: FormEvent) => {
@@ -132,7 +139,7 @@ const Dialog: FC<{
         console.log("address", address)
         console.log("phone", phone)
         // Send API 
-        removeCarts();
+        removeCart();
         onClose();
         evt.preventDefault();
     }
