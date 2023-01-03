@@ -12,16 +12,20 @@ import { numberWithCommas } from "../utils/price";
 // import ShopCard from "../components/ShopCard";
 import cls from "classnames";
 type ShopType = {};
+interface Map {
+    [key: string]: string | undefined | object | any;
+}
 
+type ProductType = { id: string, price: number, image: string, name: string };
 const ShopPage: FC<ShopType> = (props) => {
-    const [carts, setCarts] = useState({});
+    const [carts, setCarts] = useState<Map>({});
     const [open, setOpen] = useState(false);
     useEffect(() => {
         setCarts(getCarts());
     }, [])
     const onOpenDialog = () => setOpen(true);
-    const clothesData = useMemo(() => mockDataClothes.reduce((obj, nextProd) => ({ ...obj, [nextProd.id]: nextProd }), {}), []);
-    const dataMapping = useMemo(() => {
+    const clothesData = useMemo(() => mockDataClothes.reduce((obj: object, nextProd: ProductType) => ({ ...obj, [nextProd.id]: nextProd }), {}), []);
+    const dataMapping: { product: ProductType, count: number }[] = useMemo(() => {
         return Object.keys(carts).map((pId: string) => {
             return {
                 product: clothesData[pId],
@@ -57,72 +61,80 @@ const ShopPage: FC<ShopType> = (props) => {
 
     return (
         <ShopLayout>
-            <div className="grid gap-10 px-10 py-10" style={{ background: "#c99343" }}>
+            <>
+                <div className="grid gap-10 px-10 py-10" style={{ background: "#c99343" }}>
 
-                <table className="table-fixed text-white text-center">
-                    <thead>
+                    <table className="table-fixed text-white text-center">
+                        <thead>
+                            <tr>
+                                <th className="text-center">Hình ảnh</th>
+                                <th className="text-center">Tên</th>
+                                <th className="text-center">Giá tiền</th>
+                                <th className="text-center">Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {dataMapping.map(({ product, count }) =>
+                                <tr key={product.id}>
+                                    <td className="align-top text-center flex justify-center ">
+                                        <Image
+                                            className="rounded-t-lg w-full"
+                                            src={product.image}
+                                            width={400}
+                                            height={400}
+                                            alt=""
+                                            style={{ maxWidth: "10rem" }}
+                                        />
+                                    </td>
+                                    <td className="align-top">{product.name}</td>
+                                    <td className="align-top">{`${numberWithCommas(product.price)} VND`}</td>
+                                    <td className="align-top">
+                                        <div className="inline-flex rounded-md shadow-sm">
+                                            <span
+                                                onClick={() => onRemoveProduct(product.id)}
+                                                aria-current="page"
+                                                className="py-2 px-4 text-sm font-medium text-blue-700 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white hover:cursor-pointer">
+                                                -
+                                            </span>
+                                            <a href="#" className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                                {count}
+                                            </a>
+                                            <span
+                                                onClick={() => onAddProduct(product.id)}
+                                                className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white hover:cursor-pointer">
+                                                +
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>)}
+                        </tbody>
                         <tr>
-                            <th className="text-center">Hình ảnh</th>
-                            <th className="text-center">Tên</th>
-                            <th className="text-center">Giá tiền</th>
-                            <th className="text-center">Số lượng</th>
+                            <th></th>
+                            <th></th>
+                            <th>Tổng cộng</th>
+                            <th>{`${numberWithCommas(allPrice)} VND`}</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {dataMapping.map(({ product, count }) =>
-                            <tr key={product.id}>
-                                <td className="align-top text-center flex justify-center ">
-                                    <Image
-                                        className="rounded-t-lg w-full"
-                                        src={product.image}
-                                        width={400}
-                                        height={400}
-                                        alt=""
-                                        style={{maxWidth: "10rem"}}
-                                    />
-                                </td>
-                                <td className="align-top">{product.name}</td>
-                                <td className="align-top">{`${numberWithCommas(product.price)} VND`}</td>
-                                <td className="align-top">
-                                    <div className="inline-flex rounded-md shadow-sm">
-                                        <span
-                                            onClick={() => onRemoveProduct(product.id)}
-                                            aria-current="page"
-                                            className="py-2 px-4 text-sm font-medium text-blue-700 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white hover:cursor-pointer">
-                                            -
-                                        </span>
-                                        <a href="#" className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                            {count}
-                                        </a>
-                                        <span
-                                            onClick={() => onAddProduct(product.id)}
-                                            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white hover:cursor-pointer">
-                                            +
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>)}
-                    </tbody>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Tổng cộng</th>
-                        <th>{`${numberWithCommas(allPrice)} VND`}</th>
-                    </tr>
-                </table>
-                <div className="flex justify-center text-white">
-                    <button
-                        className="rounded-full hover:bg-white hover:text-orange-400"
-                        onClick={onOpenDialog}
-                    >Thanh toán ngay
-                    </button>
+                    </table>
+                    <div className="flex justify-center text-white">
+                        <button
+                            className="rounded-full hover:bg-white hover:text-orange-400"
+                            onClick={onOpenDialog}
+                        >Thanh toán ngay
+                        </button>
 
+                    </div>
                 </div>
-            </div>
-            <Dialog open={open} onClose={() => setOpen(false)} removeCart={removeCart}/>
+                <Dialog open={open} onClose={() => setOpen(false)} removeCart={removeCart} />
+            </>
         </ShopLayout>
     );
 };
+
+interface FormElements extends HTMLCollection {
+    name: HTMLInputElement;
+    address: HTMLInputElement;
+    phone: HTMLInputElement;
+}
 
 const Dialog: FC<{
     open: boolean,
@@ -132,9 +144,11 @@ const Dialog: FC<{
     if (!open) return null;
 
     const onSubmit = (evt: FormEvent) => {
-        const name = evt.currentTarget.elements.name.value;
-        const address = evt.currentTarget.elements.address.value;
-        const phone = evt.currentTarget.elements.phone.value;
+        let formElm = evt.currentTarget as HTMLFormElement;
+        let formChildElms = formElm.elements as FormElements;
+        const name = formChildElms.name.value;
+        const address = formChildElms.address.value;
+        const phone = formChildElms.phone.value;
         console.log("name", name)
         console.log("address", address)
         console.log("phone", phone)

@@ -1,11 +1,13 @@
 /** @format */
 
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import PropTypes from "prop-types";
 import { type } from "os";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import cls from "classnames";
+
 import { numberWithCommas } from "../utils/price";
 import { setCarts } from "../utils/cart";
 type CardData = {
@@ -17,8 +19,14 @@ type CardData = {
 };
 
 const ShopCard: FC<CardData> = ({ image, price, name, sold, id }) => {
+	const [isAdding, setIsAdding] = useState<Boolean>();
 	const onAddProduct = () => {
+		if(isAdding) return;
 		setCarts({ id }, true);
+		setIsAdding(true);
+		setTimeout(() => {
+			setIsAdding(false);
+		}, 2000);
 	}
 	return (
 		<div className="flex justify-center mb-4">
@@ -47,14 +55,14 @@ const ShopCard: FC<CardData> = ({ image, price, name, sold, id }) => {
 					<div className="flex justify-between">
 						<button
 							type="button"
-							className="tracking-wide h-8 inline-block px-3 py-1.5 bg-amber-600 normal-case text-white font-small text-xs leading-tight rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out"
+							className={cls("tracking-wide h-8 inline-block px-3 py-1.5 normal-case text-white font-small text-xs leading-tight rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out bg-amber-600", { "bg-amber-900": isAdding })}
 							onClick={onAddProduct}
 						>
 							<FontAwesomeIcon
-								icon={faCartPlus}
+								icon={isAdding ? faCheck : faCartPlus}
 								className="mr-2"
 							/>
-							Add to cart
+							{isAdding ? "Added to cart" : "Add to cart"}
 						</button>
 						<div className="flex flex-col justify-end text-right">
 							<span className="text-xs">Sold {sold}</span>

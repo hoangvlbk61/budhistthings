@@ -15,9 +15,12 @@ import {
 	faShirt,
 	faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
-import faFacebook from '@fortawesome/fontawesome-free-brands/faFacebook'
+import rawFaFacebook from '@fortawesome/fontawesome-free-brands/faFacebook'
 
 import cls from "classnames";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+const faFacebook = rawFaFacebook as IconProp
 
 const LogoWrapper = styled.div`
 	width: fit-content;
