@@ -15,7 +15,12 @@ import {
 	faShirt,
 	faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
+import rawFaFacebook from '@fortawesome/fontawesome-free-brands/faFacebook'
+
 import cls from "classnames";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+const faFacebook = rawFaFacebook as IconProp
 
 const LogoWrapper = styled.div`
 	width: fit-content;
@@ -169,8 +174,10 @@ const ShopLayout: FC<ShopLayoutType> = ({ children }) => {
 						</div>
 					</Headers>
 					<div className="flex items-center cursor-pointer">
-						Your cart
-						<FontAwesomeIcon icon={faCartShopping} size="xl" className="ml-2"/>
+						<Link href={"/cart"}>
+							Your cart
+							<FontAwesomeIcon icon={faCartShopping} size="xl" className="ml-2" />
+						</Link>
 					</div>
 					<NavResponsive
 						onClick={openNav}
@@ -275,24 +282,22 @@ const ShopLayout: FC<ShopLayoutType> = ({ children }) => {
 												className="flex flex-row items-center"
 											>
 												{" "}
-												<FontAwesomeIcon
-													icon={"facebook"}
-												/>
+												<FontAwesomeIcon icon={faFacebook} className="mr-2" />
 												Pháp Phục Thanh Hoa{" "}
 											</Link>{" "}
 										</div>
 									</div>
 								</div>
 								<div className="md:grid-cols-2 xs:grid-cols-1 text-left">
-									<b>Cơ sở Pháp Phục Thanh Hoa</b>
+									<span className="font-bold">Cơ sở Pháp Phục Thanh Hoa</span>
 									<br />
 									<div>
-										<b> Tại Hà Nội: </b>
+										<span className="font-bold"> Tại Hà Nội: </span>
 										<div>Đang hoàn thiện ... </div>
 									</div>
 									<br />
 									<div>
-										<b> Tại Sài Gòn: </b>
+										<span className="font-bold"> Tại Sài Gòn: </span>
 										<div>
 											{" "}
 											Đang hoàn thiện ... (Dự kiến 2024){" "}
